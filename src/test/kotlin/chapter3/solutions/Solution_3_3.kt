@@ -3,22 +3,18 @@ package chapter3.solutions
 import chapter3.Cons
 import chapter3.List
 import chapter3.Nil
-import chapter4.Boilerplate.size
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldThrow
 import io.kotlintest.specs.WordSpec
 
 // tag::init[]
 tailrec fun <A> drop(l: List<A>, n: Int): List<A> =
-    when (n) {
-        l.size() -> Nil
-        0 -> l
-        else -> when (l) {
-            is Cons -> drop(l.tail, n - 1)
-            is Nil -> throw IllegalStateException(
-                "Cannot drop more elements than in list"
-            )
-        }
+    if (n == 0) l
+    else when (l) {
+        is Cons -> drop(l.tail, n - 1)
+        is Nil -> throw IllegalStateException(
+            "Cannot drop more elements than in list"
+        )
     }
 // end::init[]
 
