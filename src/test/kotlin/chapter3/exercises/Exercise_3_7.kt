@@ -48,9 +48,13 @@ object Exercise_3_7 {
 
 fun main() {
     // tag::init[]
-    foldRight(
+    val res = foldRight(
         List.of(1, 2, 3),
         List.empty<Int>(),
         { x, y -> Cons(x, y) })
     // end::init[]
+    if (res == List.of(1, 2, 3))
+        println("they're the same")
+    else
+        println("they're different")
 }
