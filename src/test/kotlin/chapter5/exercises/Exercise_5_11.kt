@@ -15,16 +15,16 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 
 //tag::init[]
+fun <A, S> unfold(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
+    f(z).map { pair ->
+        cons({ pair.first }, { unfold(pair.second, f)} )
+    }.getOrElse { empty() }
+
 fun <A, S> unfoldC(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
     when (val oas = f(z)) {
         is None -> empty()
         is Some -> cons({ oas.get.first }, { unfoldC(oas.get.second, f) })
     }
-
-fun <A, S> unfold(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
-    f(z).map { pair ->
-        cons({ pair.first }, { unfold(pair.second, f)} )
-    }.getOrElse { empty() }
 //end::init[]
 
 /**
