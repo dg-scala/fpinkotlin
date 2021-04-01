@@ -15,15 +15,15 @@ import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 
 //tag::init[]
-fun <A, S> unfold(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
+fun <A, S> unfoldC(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
     when (val oas = f(z)) {
         is None -> empty()
-        is Some -> cons({ oas.get.first }, { unfold(oas.get.second, f) })
+        is Some -> cons({ oas.get.first }, { unfoldC(oas.get.second, f) })
     }
 
-fun <A, S> unfoldS(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
+fun <A, S> unfold(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
     f(z).map { pair ->
-        cons({ pair.first }, { unfoldS(pair.second, f)} )
+        cons({ pair.first }, { unfold(pair.second, f)} )
     }.getOrElse { empty() }
 //end::init[]
 
@@ -31,20 +31,20 @@ fun <A, S> unfoldS(z: S, f: (S) -> Option<Pair<A, S>>): Stream<A> =
  * Re-enable the tests by removing the `!` prefix!
  */
 class Exercise_5_11 : WordSpec({
-    "unfold" should {
+    "unfoldC" should {
         """return a stream based on an initial state and a function
             applied to each subsequent element""" {
-            unfold(0, { s: Int ->
+            unfoldC(0, { s: Int ->
                 Some(Pair(s, s + 1))
             }).take(5).toList() shouldBe
                     List.of(0, 1, 2, 3, 4)
         }
     }
 
-    "unfoldS" should {
+    "unfold" should {
         """return a stream based on an initial state and a function
             applied to each subsequent element""" {
-            unfoldS(0, { s: Int ->
+            unfold(0, { s: Int ->
                 Some(Pair(s, s + 1))
             }).take(5).toList() shouldBe
                     List.of(0, 1, 2, 3, 4)
