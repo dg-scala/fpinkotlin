@@ -9,19 +9,20 @@ import io.kotlintest.specs.WordSpec
 /**
  * TODO: Re-enable tests by removing `!` prefix!
  */
-class Exercise_6_6 : WordSpec({
 
-    //tag::init[]
-    fun <A, B, C> map2(
-        ra: Rand<A>,
-        rb: Rand<B>,
-        f: (A, B) -> C
-    ): Rand<C> = { r ->
-        val (a, r1) = ra(r)
-        val (b, r2)= rb(r1)
-        Pair(f(a, b), r2)
-    }
-    //end::init[]
+//tag::init[]
+fun <A, B, C> map2(
+    ra: Rand<A>,
+    rb: Rand<B>,
+    f: (A, B) -> C
+): Rand<C> = { r ->
+    val (a, r1) = ra(r)
+    val (b, r2)= rb(r1)
+    Pair(f(a, b), r2)
+}
+//end::init[]
+
+class Exercise_6_6 : WordSpec({
 
     "map2" should {
         "combine the results of two actions" {
