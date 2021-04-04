@@ -9,14 +9,15 @@ import kotlin.math.abs
 /**
  * TODO: Re-enable tests by removing `!` prefix!
  */
-class Exercise_6_1 : WordSpec({
 
-    //tag::init[]
-    fun nonNegativeInt(rng: RNG): Pair<Int, RNG> {
-        val (i, r) = rng.nextInt()
-        return Pair(if (i < 0) abs(i + 1) else i, r)
-    }
-    //end::init[]
+//tag::init[]
+fun nonNegativeInt(rng: RNG): Pair<Int, RNG> {
+    val (i, r) = rng.nextInt()
+    return Pair(if (i < 0) abs(i + 1) else i, r)
+}
+//end::init[]
+
+class Exercise_6_1 : WordSpec({
 
     "nonNegativeInt" should {
 

@@ -10,12 +10,24 @@ import io.kotlintest.specs.WordSpec
 class Exercise_6_3 : WordSpec({
 
     //tag::init[]
-    fun intDouble(rng: RNG): Pair<Pair<Int, Double>, RNG> = TODO()
+    fun intDouble(rng: RNG): Pair<Pair<Int, Double>, RNG> {
+        val (i, r1) = nonNegativeInt(rng)
+        val (d, r2) = double(r1)
+        return Pair(Pair(i, d), r2)
+    }
 
-    fun doubleInt(rng: RNG): Pair<Pair<Double, Int>, RNG> = TODO()
+    fun doubleInt(rng: RNG): Pair<Pair<Double, Int>, RNG> {
+        val (d, r1) = double(rng)
+        val (i, r2) = nonNegativeInt(r1)
+        return Pair(Pair(d, i), r2)
+    }
 
-    fun double3(rng: RNG): Pair<Triple<Double, Double, Double>, RNG> =
-        TODO()
+    fun double3(rng: RNG): Pair<Triple<Double, Double, Double>, RNG> {
+        val (d1, r1) = double(rng)
+        val (d2, r2) = double(r1)
+        val (d3, r3) = double(r2)
+        return Pair(Triple(d1, d2, d3), r3)
+    }
     //end::init[]
 
     "intDouble" should {
@@ -42,21 +54,21 @@ class Exercise_6_3 : WordSpec({
                 Pair(Int.MAX_VALUE, rng2)
         }
 
-        "!generate a pair of int and double" {
+        "generate a pair of int and double" {
             val (id, _) = intDouble(rng)
             val (i, d) = id
             i shouldBe Int.MAX_VALUE
             d shouldBe doubleBelowOne
         }
 
-        "!generate a pair of double and int" {
+        "generate a pair of double and int" {
             val (di, _) = doubleInt(rng)
             val (d, i) = di
             d shouldBe doubleBelowOne
             i shouldBe Int.MAX_VALUE
         }
 
-        "!generate a triple of double, double, double" {
+        "generate a triple of double, double, double" {
             val (ddd, _) = double3(rng)
             val (d1, d2, d3) = ddd
             d1 shouldBe doubleBelowOne

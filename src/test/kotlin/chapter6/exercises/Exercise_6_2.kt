@@ -1,7 +1,6 @@
 package chapter6.exercises
 
 import chapter6.RNG
-import chapter6.solutions.nonNegativeInt
 import chapter6.unusedRng
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
@@ -9,14 +8,15 @@ import io.kotlintest.specs.WordSpec
 /**
  * TODO: Re-enable tests by removing `!` prefix!
  */
-class Exercise_6_2 : WordSpec({
 
-    //tag::init[]
-    fun double(rng: RNG): Pair<Double, RNG> {
-        val (i, rng2) = nonNegativeInt(rng)
-        return Pair(i / (Int.MAX_VALUE.toDouble() + 1), rng2)
-    }
-    //end::init[]
+//tag::init[]
+fun double(rng: RNG): Pair<Double, RNG> {
+    val (i, rng2) = nonNegativeInt(rng)
+    return Pair(i / (Int.MAX_VALUE.toDouble() + 1), rng2)
+}
+//end::init[]
+
+class Exercise_6_2 : WordSpec({
 
     "double" should {
 
